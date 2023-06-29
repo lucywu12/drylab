@@ -1,3 +1,10 @@
+#Notes from Kyle
+
+If you're trying to run this from windows, set up a unix/ubuntu environment using the WSL command. Once you have that navigate to the BOTs home directory and run the following command:
+python manage.py runserver
+
+
+
 # BOTs
 BioBrick Optimization Tool for synthesis
 - created for synthetic biologists
