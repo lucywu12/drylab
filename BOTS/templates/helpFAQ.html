@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Help - Gene Synthesis Tool</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/general_look.css' %}">
+</head>
+<body>
+    <div django-app="TaskManager">
+        <div class="container">
+            <a name="linktotop"></a>
+            <div class="row">
+                <a href="{% url 'home' %}">
+                    <div class="button">
+                        <p>
+                            Home
+                        </p>
+                    </div>
+                </a>
+            </div>
+            <div class="row dark-orange-on-blue">
+                <h1 id="title">
+                    Help - GC Richness
+                </h1>
+            </div>
+            <div class="row blue-on-dark-orange">
+                <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <ul>
+                        <li><a href="#help-step-1" class="dark-orange-on-blue">1-Fasta Format</a></li>
+                        <li><a href="#help-step-2" class="dark-orange-on-blue">2-Upload</a></li>
+                        <li><a href="#help-step-3" class="dark-orange-on-blue">3-Sequence</a></li>
+                        <li><a href="#help-step-4" class="dark-orange-on-blue">4-Settings</a></li>
+                        <li><a href="#help-step-5" class="dark-orange-on-blue">5-Play</a></li>
+                        <li><a href="#help-step-6" class="dark-orange-on-blue">6-Wait</a></li>
+                        <li><a href="#help-step-7" class="dark-orange-on-blue">7-Score</a></li>
+                        <li><a href="#help-step-8" class="dark-orange-on-blue">8-Download</a></li>
+                        <li><a href="#help-step-9" class="dark-orange-on-blue">9-Alter</a></li>
+                        <li><a href="#help-FAQ" class="dark-orange-on-blue">FAQ</a></li>
+                        <li><a href="#help-codon-harmony" class="dark-orange-on-blue">Codon Harmony Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col col-lg-9 col-md-9 col-sm-9 col-xs-12 black-on-white">
+                    <h4 id="help-head">
+                        <a name="help-step-1"></a>
+                        *Step 1: Create a fasta file for Amino Acids
+                    </h4>
+                    <p id="help-text">
+                        Currently Encore cannot understand Nucleotides, so make sure to transform them to Amino Acids using a tool like
+                        <a href="https://web.expasy.org/translate/">Expasy</a> before submitting them to Encore.
+                    </p>
+                    <p id="help-text">
+                        Fasta files are formatted differently than traditional text files,<br />
+                        >tr|M1FM93|M1FM93_9MAMM Cytochrome b (Fragment) OS=mammal environmental sample OX=1092587 GN=CytoB PE=4 SV=1<br />
+                        FGSLLGICLILQILTGLFLAMHYTSDTTTAFSSVTHICRDVNYGWIIRYMHANGASMFFI
+                        CLYVHVGRGMYYGSYTFLETWNIGVILLFTVMATAFMGYVLP<br />
+                        is a valid fasta due to >/text/ on the first line, followed by the AA sequence on the second line.
+                        <br />
+                        ><br />
+                        FG<br />
+                        Is also valid
+                    </p>
+
+                    
+                    <h4 id="help-head">
+                        <a name="help-step-2"></a>
+                        *Step 2: Upload your file
+                    </h4>
+                    <p id="help-text">
+                        There are 2 methods to do this: <br />
+                        a) Drag and drop
+                        <img alt="how to drag and drop your fasta file - animated" src="#" />
+                        <br />
+                        b) Select from computer directory
+                        <img alt="how to add fasta file from directory - animated" src="#" />
+                    </p>
+
+                    
+                    <h4 id="help-head">
+                        <a name="help-step-3"></a>
+                        Step 3: Check your sequence
+                    </h4>
+                    <p id="help-text">
+                        Your sequence may have uploaded weirdly by shear bad luck,
+                        give it a look to see if it's correct in the editor
+                    </p>
+
+                    
+                    <h4 id="help-head">
+                        <a name="help-step-4"></a>
+                        Step 4: Change your settings
+                    </h4>
+                    <p id="help-text">
+                        Encode has many settings for you to change.
+                        Most settings are based off of <a href="https://codon-harmony.readthedocs.io/en/latest/usage.html">Brian Weitzner's Codon Harmony</a>
+                        <table>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Function</th>
+                                <th>Default</th>
+                            </tr>
+                            <tr>
+                                <td>Host</td>
+                                <td>Uses codes to determine which organism to optimize for, codes found at <a src="http://www.kazusa.or.jp/codon/">Kazusa</a></td>
+                                <td>"413997" which corresponds to Escherichia Coli B</td>
+                            </tr>
+                            <tr>
+                                <td>Host Threshold</td>
+                                <td>
+                                    The lowest percentage of codon that can be used,
+                                    eg: CGT is used 9% of the time, and CGC is used 11% of the time by the organism.
+                                    With a threshold of 10%, CGT will not be used by Encore, but CGC will be!
+                                </td>
+                                <td>10%</td>
+                            </tr>
+                            <tr>
+                                <td>GC Richness Threshold</td>
+                                <td>Maximum GC content allowed in sequence chunk</td>
+                                <td>58%</td>
+                            </tr>
+                            <tr>
+                                <td>GC Richness - Sequence Chunk Size</td>
+                                <td>Size of GC chunk to look at</td>
+                                <td>118nt</td>
+                            </tr>
+                            <tr>
+                                <td>Local Host Profile</td>
+                                <td>Codon usage table for the selected host, if it is in Kazusa, it will already exist. Else you need to provide it as a JSON file which can be tricky</td>
+                                <td>if in Kazusa it is automatic, if not, it will scream</td>
+                            </tr>
+                            <tr>
+                                <td>Local Homopolymer Threshold</td>
+                                <td>Number of consecutive NT repeats</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>Cycles</td>
+                                <td>Number of independent codon samples to run</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>Inner Cycles</td>
+                                <td>Number of times to optimize each codon</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>Max Relax</td>
+                                <td>
+                                    Maximum deviation from hosts perfect codons
+                                    ie. if IDT screams at you, increase this and it should go down
+                                </td>
+                                <td>0.1</td>
+                            </tr>
+                            <tr>
+                                <td>Restriction Sites</td>
+                                <td>List of restriction sites to remove</td>
+                                <td>Ndel Xhol Hpal Pstl EcoRV Ncol BamHI</td>
+                            </tr>
+                            <tr>
+                                <td>Remove Splice sites</td>
+                                <td>Use with Mammalian hosts</td>
+                                <td>False (do not remove)</td>
+                            </tr>
+                            <tr>
+                                <td>Remove Alternate Start Sites</td>
+                                <td>Use with Bacterial hosts</td>
+                                <td>False (do not remove)</td>
+                            </tr>
+                        </table>
+                    </p>
+
+                    
+                    <h4 id="help-head">
+                        <a name="help-step-5"></a>
+                        *Step 5: Press play
+                    </h4>
+
+                    
+                    <h4 id="help-head">
+                        <a name="help-step-6"></a>
+                        *Step 6: Wait
+                    </h4>
+
+                    <p id="help-text">
+                        The program is poorly done, so it may take several minutes before your sequence is done.
+                        Here's a little image to show you roughly how long it takes.
+                        <picture>
+                            <source media="(min-width: 650px)" srcset="{% static 'img/codon-harmony-speed.png' %}">
+                            <img alt="Graph of number of AA vs time to compute" id="help-img" src="{% static '#' %}" />
+                        </picture>                    
+                    </p>
+
+                    
+                    <h4 id="help-head">
+                        <a name="help-step-7"></a>
+                        Step 7: Check IDT score
+                    </h4>
+                    <p id="help-text">
+                        See your score in IDT by clicking the button
+                    </p>
+
+                    
+                    <h4 id="help-head">
+                        <a name="help-step-8"></a>
+                        *Step 8: Download your sequence onto your computer
+                    </h4>
+                    <p id="help-text">
+                        Your sequence is now optimized
+                    </p>
+
+                    
+                    <h4 id="help-head">
+                        <a name="help-step-9"></a>
+                        Step 9: Alter your sequence
+                    </h4>
+                    <p id="help-text">
+                        The score may not be the best and may require different settings/to be changed manually in key sections.
+                    </p>
+
+                    
+                    <h4 id="help-head">
+                        <a name="help-FAQ"></a>
+                        FAQ: Most of my sequence is fine, what can i do to optimize a small portion.
+                    </h4>
+                    <p id="help-text">
+                        Load up just that portion of the sequence and run Encore on it with high Max Relax and Very low Threshold
+                    </p>
+
+                    
+                    <h4 id="help-head">
+                        <a name="help-codon-harmony"></a>
+                        For more information on the algorithm Encore is based upon.
+                    </h4>
+                    <p id="help-text">
+                        <a href="https://codon-harmony.readthedocs.io/en/latest/index.html">Brian Weitzner's page</a>
+                    </p>
+                    
+                    <a href="#linktotop">Back to Top</a>
+                </div>
+            </div>
+            
+            
+        </div><!-- container -->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+</html>
