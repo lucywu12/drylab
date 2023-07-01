@@ -1,0 +1,6 @@
+>test_sequence1|can be optimized with `max_relax` set to 0.1
+HHHHHHHHHH
+>test_sequence2|cannot be optimized with `max_relax` set to 0.1
+ACDEFGHIKLMNPQRSTVWY
+>test_sequence3|can be optimized with `max_relax` set to 0.1, has extreme GC content
+FFFFFFFFFFFF

@@ -1,0 +1,6 @@
+name: codon_harmony
+dependencies:
+  - biopython==1.73
+  - ipykernel
+  - pip:
+    - python_codon_tables==0.1.8
