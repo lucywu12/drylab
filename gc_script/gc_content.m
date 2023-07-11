@@ -1,11 +1,12 @@
+%Note: for files, be sure to remove any other text (ex. the name)
+
 file1 = "C:\Users\ninja\Downloads\output_onex_05relax.fasta";
 file2 = "C:\Users\ninja\Downloads\output_onex.fasta";
 %replace the filepaths with chosen fasta file
 
+
 matrixDisp(file1);
 matrixDisp(file2);
-
-
 
 
 function matrixDisp(input)
@@ -26,8 +27,10 @@ function matrixDisp(input)
             matrix(row,col) = 255;
         end
     end
+    matrix
     densityMap = reshape(matrix,1,[]);       
-    figure;imshow(densityMap);
+    figure;
+    imshow(densityMap);
     customColorMap=jet(256);
     imagesc(densityMap);
     colormap(customColorMap);
