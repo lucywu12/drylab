@@ -11,14 +11,25 @@ freq(file1);
 
 function freq(input)
     file = fopen(input,'r');
-    sequence = fscanf(file,'%c');
+    seq = fscanf(file,'%c');
 
     fclose(file);
     
-    sequence = regexprep(sequence,'\s','');
-    sequence
+    seq = regexprep(seq,'\s','');
+
+    sequence = zeros(1, numel(seq)); %preallocate size of vector
+
+    %create a sequence where GC is 1 and AT is 0
+    for s=1:numel(seq)
+        if seq(s) == 'G' || seq(s) == 'C'
+            sequence(s) = 1;
+        else
+            sequence(s) = 0;
+        end
+    end
+
     
-    frequency = zeros(2, 20); %shouldn't really hard code this but...
+    frequency = zeros(2, 1); %start off
     i = 2;
     f = 1; %Keep track of what part of matrix to append to
 
@@ -27,18 +38,16 @@ function freq(input)
         c = 1; 
         
         %If the previous is the same, increment
-        while sequence(i) == 'C' || sequence(i) == 'G'
+        while sequence(i) == sequence (i - 1)
             c = c+1;
             i = i+1;
-            c
         end
         %Otherwise, add to the matrix
         %Append the count
-        f
-        matrix(1, f) = c;
+        frequency(1, f) = c;
 
-        %Append the letter
-        matrix(2, f) = sequence(i);
+        %Append the letter (GC = 1, AT = 0)
+        frequency(2, f) = sequence(i);
 
         %Increment
         f = f+1;
@@ -46,7 +55,7 @@ function freq(input)
     end
     frequency
     %Output the maximum consecutive Gs and Cs
-    max(frequency)
+    %max(frequency)
 
 end
 
