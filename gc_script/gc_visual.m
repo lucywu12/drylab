@@ -4,12 +4,57 @@
 file1 = "/Users/lucywu/drylab/codon_harmony/onexoutput.fasta";
 %replace the filepaths with chosen fasta file
 
-%code is a little redundant below... but that can be easily fixed later
+%freq(file1);
+percent(file1);
 
-%matrixDisp(file1);
-freq(file1);
+function percent(input)
+
+    %maybe rename some variables, there is something wrong with the
+    %counting again
+
+    file = fopen(input,'r');
+    seq = fscanf(file,'%c');
+
+    fclose(file);
+    
+    seq = regexprep(seq,'\s','');
+
+    sequence = zeros(1, numel(seq)); %preallocate size of vector
+
+    %create a sequence where GC is 1 and AT is 0
+    for s=1:numel(seq)
+        if seq(s) == 'G' || seq(s) == 'C'
+            sequence(s) = 1;
+        else
+            sequence(s) = 0;
+        end
+    end
+
+    ratios = zeros(1, length(sequence) - 125 + 1); %set up a place to store values
+    
+    %iterate through all 125 base pair frames
+    
+    count = 0;
+    for i = 1:(length(sequence) - 125 + 1)
+        count = 0;
+        for frame = i:(i + 125 - 1)
+            if sequence(frame) == 1 %if G or C
+                
+                count = count + 1; %increment count
+            end
+            ratios(i) = count; %add to our matrix
+        end
+    end
+
+    ratios
+    figure;
+    bar(ratios)
+end
+
+
 
 function freq(input)
+
     file = fopen(input,'r');
     seq = fscanf(file,'%c');
 
@@ -67,10 +112,15 @@ function freq(input)
         frequency(2, f) = sequence(end)
         frequency(3, f) = i
     end
-    frequency
+
     %Output the maximum consecutive Gs and Cs
     %max(frequency)
     
+    %frequency(1,:) %first row
+
+    %plot the results
+    figure; %generate a new window
+    bar(frequency(1,:));
 end
 
 %Output: Count, GC/AT, Position
