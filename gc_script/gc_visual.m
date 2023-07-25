@@ -1,11 +1,11 @@
 %Note: for files, be sure to remove any other text (ex. the name)
 %Similar to gc_content... but different!
 
-file1 = "/Users/lucywu/drylab/codon_harmony/onexoutput.fasta";
+file1 = "/Users/lucywu/drylab/gc_script/truncated_1x_relax.fasta";
 %replace the filepaths with chosen fasta file
 
-%freq(file1);
-percent(file1);
+freq(file1);
+%percent(file1);
 
 function percent(input)
 
@@ -108,19 +108,32 @@ function freq(input)
     if sequence(end) == sequence(end - 1)
         frequency(1, f-1) = c + 1;
     else 
-        frequency(1, f) = 1
+        frequency(1, f) = 1;
         frequency(2, f) = sequence(end)
-        frequency(3, f) = i
+        frequency(3, f) = i;
     end
 
     %Output the maximum consecutive Gs and Cs
-    %max(frequency)
-    
-    %frequency(1,:) %first row
+    if frequency(2, 1) == 1
+        final = frequency(:, 1:2:end); %GC is first
+    else
+        final = frequency(:, 2:2:end); %GC is second
+    end
+    final
 
-    %plot the results
+    %Output the first 20 max count values and columns
+    [~, max] = sort(final(1, :), 'descend');
+    toptwenty = max(1:20);
+    final_max = final(:, toptwenty)
+
+    %plot all the results (GC and AT)
     figure; %generate a new window
-    bar(frequency(1,:));
+    bar(frequency(3, :), frequency(1, :));
+    
+    %only plot GC content
+    figure;
+    % Create the bar graph
+    bar(final(3, :), final(1, :));
 end
 
 %Output: Count, GC/AT, Position
